@@ -3,25 +3,20 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:gravity="top"
 	android:orientation="vertical">
 
 	<TextView
-		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="@string/hello"
-		android:id="@+id/version"/>
+		android:text="大型文本"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content"
+		android:id="@+id/title"/>
 
-	<Button
+	<TextView
 		android:layout_height="wrap_content"
-		android:text="按钮"
+		android:text="文本"
 		android:layout_width="wrap_content"
-		android:id="@+id/check"/>
-
-	<ListView
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:id="@+id/list"/>
+		android:id="@+id/innertext"/>
 
 </LinearLayout>
 
