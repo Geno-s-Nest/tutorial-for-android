@@ -1,126 +1,128 @@
 package com.geno.tutorial;
 
 import android.app.*;
+import android.content.*;
+import android.graphics.*;
 import android.os.*;
 import android.view.*;
-import android.view.View.*;
 import android.widget.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import android.widget.AdapterView.*;
-import android.view.ContextMenu.*;
-import android.content.pm.*;
-import android.content.pm.PackageManager.*;
+import android.widget.ExpandableListView.*;
 
-public class MainActivity extends Activity
-{
-	public String i;
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-	{
+public class MainActivity extends Activity{
+	/*    private HashMap<String, String> installPackagesInfo()
+	 {  
+	 PackageManager packageManager = this.getPackageManager();  
+	 List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(0);  
+	 HashMap<String, String> resultMap = new HashMap<String, String>();  
+	 Iterator<ApplicationInfo> iterator = applicationInfos.iterator();  
+	 while(iterator.hasNext())
+	 {  
+	 ApplicationInfo applicationInfo = iterator.next();  
+	 String packageName = applicationInfo.packageName;
+	 String packageLabel = packageManager.getApplicationLabel(applicationInfo).toString();
+	 resultMap.put(packageLabel, packageName);  
+	 }
+	 return resultMap;
+	 }  */
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-		final TextView v = (TextView) findViewById(R.id.version);
-		ListView list = (ListView) findViewById(R.id.list);
-		PackageManager pm = getPackageManager();
-		
-        ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>(); 
-        for (int i=0;i < 10;i++) 
-        { 
-			HashMap<String, Object> map = new HashMap<String, Object>(); 
-			try
-			{
-				map.put("ItemImage", pm.getApplicationIcon("com.geno.widget0004.schedule"));
-			}
-			catch (PackageManager.NameNotFoundException e)
-			{}
-//			map.put("ItemTitle", "Level " + i); 
-//			map.put("ItemText", "Finished in 1 Min 54 Secs, 70 Moves! "); 
-			listItem.add(map); 
-        }
-        SimpleAdapter listItemAdapter = new SimpleAdapter(this, listItem,
-														  R.layout.list_items,
-														  new String[] {"ItemImage", /*"ItemText"*/},  
-														  new int[] {R.id.ItemImage,/*R.id.ItemText*/}); 
-        list.setAdapter(listItemAdapter); 
-        list.setOnItemClickListener
-		(new OnItemClickListener() 
-			{ 
-				@Override 
-				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-				{ 
-					setTitle("点击第" + arg2 + "个项目"); 
-				} 
-			}
-		); 
-        list.setOnCreateContextMenuListener
-		(new OnCreateContextMenuListener() 
-			{ 
-				@Override 
-				public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
-				{ 
-					menu.setHeaderTitle("长按菜单-ContextMenu");    
-					menu.add(0, 0, 0, "弹出长按菜单0"); 
-					menu.add(0, 1, 0, "弹出长按菜单1");    
-				} 
-			}
-		);  
-    	Button c = (Button) findViewById(R.id.check);
-		c.setOnClickListener
-		(new OnClickListener()
-			{
-				public void onClick(View p1)
-				{
+        setContentView(R.layout.activity_main);
 
-				}
-			}
-		);
-		/*		c.setOnClickListener(
-		 new OnClickListener()
-		 {public void onClick(View p1)
-		 {new Thread
-		 (new Runnable()
-		 {
-		 @Override
-		 public void run()
-		 {
-		 try
-		 {
-		 URL u = new URL("https://github.com/Geno-s-Nest/tutorial-for-android/blob/master/assets/version.txt");
-		 URLConnection conn = u.openConnection();
-		 conn.setConnectTimeout(10000);
-		 conn.setReadTimeout(10000);
-		 InputStream in = conn.getInputStream();
-		 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		 StringBuffer buffer = new StringBuffer();
-		 String t = "";
-		 while ((t = reader.readLine()) != null)
-		 buffer.append(t);
-		 i = buffer.toString() ;
-		 }
-		 catch (Exception e)
-		 {
-		 Toast.makeText(getApplicationContext(), "Network ERROR", Toast.LENGTH_SHORT).show();
-		 v.setText(e.toString());
-		 e.printStackTrace();
-		 }
-		 }
-		 }
-		 ).start();
-		 }
-		 }
-		 );*/
-		v.setText(v.getText() + i);
+        final ExpandableListAdapter adapter = new BaseExpandableListAdapter() 
+        {
+            private String[] ArticlesPark = new String[] 
+			{
+				"前言",
+				"Layout"
+			};
+            private String[][] Articles = new String[][] 
+			{
+				{"写在前面的话","一些好的和“好的”品质"},
+				{"TextView"}
+			};
 
+            TextView getTextView() 
+            {
+                AbsListView.LayoutParams lp = new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 64);
+                TextView textView = new TextView(MainActivity.this);
+                textView.setLayoutParams(lp);
+                textView.setGravity(Gravity.LEFT);
+                textView.setPadding(36, 0, 0, 0);
+                textView.setTextSize(20);
+                textView.setTextColor(Color.BLACK);
+                return textView;
+            }
+            @Override
+            public int getGroupCount() 
+            {return ArticlesPark.length;}
+            @Override
+            public Object getGroup(int groupPosition) 
+            {return ArticlesPark[groupPosition];}
+            @Override
+            public long getGroupId(int groupPosition) 
+            {return groupPosition;}
+            @Override
+            public int getChildrenCount(int groupPosition) 
+            {return Articles[groupPosition].length;}
+            @Override
+            public Object getChild(int groupPosition, int childPosition) 
+            {return Articles[groupPosition][childPosition]; }
+            @Override
+            public long getChildId(int groupPosition, int childPosition) 
+            {return childPosition;}
+            @Override
+            public boolean hasStableIds() 
+            {return true;}
+            @Override
+            public View getGroupView(int groupPosition, boolean isExpanded,View convertView, ViewGroup parent) 
+            {
+                LinearLayout ll = new LinearLayout(MainActivity.this);
+                ll.setOrientation(0);
+                ImageView logo = new ImageView(MainActivity.this);
+                logo.setPadding(50, 0, 0, 0);
+                ll.addView(logo);
+                TextView textView = getTextView();
+                textView.setTextColor(Color.BLACK);
+                textView.setText(getGroup(groupPosition).toString());
+                ll.addView(textView);
+                return ll;
+            }
+            @Override
+            public View getChildView(int groupPosition, int childPosition,boolean isLastChild, View convertView, ViewGroup parent) 
+            {
+                LinearLayout ll = new LinearLayout(MainActivity.this);
+                ll.setOrientation(0);
+                ImageView generallogo = new ImageView(MainActivity.this);
+                ll.addView(generallogo);
+                TextView textView = getTextView();
+                textView.setText(getChild(groupPosition, childPosition).toString());
+                ll.addView(textView);
+                return ll;
+            }
+            @Override
+            public boolean isChildSelectable(int groupPosition,int childPosition) 
+            {return true;}
+        };
+        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.list);
+        expandableListView.setAdapter(adapter);
+        expandableListView.setOnChildClickListener
+        (new OnChildClickListener() 
+        	{
+				@Override
+				public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) 
+            	{
+//                Toast.makeText(MainActivity.this,"你点击了" + adapter.getChild(groupPosition, childPosition),Toast.LENGTH_SHORT).show();
+					if(groupPosition==0)
+					{
+						if(childPosition==0)
+						{
+							Intent to = new Intent(MainActivity.this,com.geno.tutorial.articles.foreword.Foreword.class);
+						startActivity(to);
+						}
+					}
+					return false;
+            	}
+        	}
+        );
     }
-	//长按菜单响应函数 
-	@Override 
-	public boolean onContextItemSelected(MenuItem item)
-	{ 
-		setTitle("点击了长按菜单里面的第" + item.getItemId() + "个项目");  
-		return super.onContextItemSelected(item); 
-	}
-
 }
