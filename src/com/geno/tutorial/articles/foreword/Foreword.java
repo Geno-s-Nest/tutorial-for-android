@@ -18,7 +18,9 @@ public class Foreword extends Activity
 		TextView t = (TextView) findViewById(R.id.title);
 		TextView i = (TextView) findViewById(R.id.innertext);
 		t.setText(title);
-		i.setText("这是");
+		i.setText("    这将是有史以来最糟糕的一份教程，因为它不告诉你为什么要这样写，只告诉你怎样写。\n"
+		+"    约定：\n"
+		+"\n");
 	}
 }
 

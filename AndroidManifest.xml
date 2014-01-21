@@ -18,12 +18,10 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.geno.tutorial.articles.foreword.Foreword"></activity>
+        <activity android:name="com.geno.tutorial.articles.foreword.Foreword"/>
+        <activity android:name="com.geno.tutorial.articles.foreword.Goodhabit"/>
     </application>
-
 </manifest>

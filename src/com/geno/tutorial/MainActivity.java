@@ -24,6 +24,7 @@ public class MainActivity extends Activity{
 	 }
 	 return resultMap;
 	 }  */
+	public Intent to;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -40,7 +41,6 @@ public class MainActivity extends Activity{
 				{"写在前面的话","一些好的和“好的”品质"},
 				{"TextView"}
 			};
-
             TextView getTextView() 
             {
                 AbsListView.LayoutParams lp = new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 64);
@@ -116,8 +116,13 @@ public class MainActivity extends Activity{
 					{
 						if(childPosition==0)
 						{
-							Intent to = new Intent(MainActivity.this,com.geno.tutorial.articles.foreword.Foreword.class);
-						startActivity(to);
+							to = new Intent(MainActivity.this,com.geno.tutorial.articles.foreword.Foreword.class);
+							startActivity(to);
+						}
+						else
+						{
+							to = new Intent(MainActivity.this,com.geno.tutorial.articles.foreword.Goodhabit.class);
+							startActivity(to);
 						}
 					}
 					return false;
