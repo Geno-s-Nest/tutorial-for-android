@@ -1,4 +1,4 @@
-package com.geno.tutorial.articles.foreword;
+package com.geno.tutorial.articles.picker;
 
 import com.geno.tutorial.R;
 
@@ -6,9 +6,9 @@ import android.app.*;
 import android.os.*;
 import android.widget.TextView;
 
-public class Foreword extends Activity
+public class DateP extends Activity
 {
-	String title = "写在前面的话";
+	String title = "DatePicker";
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -19,8 +19,8 @@ public class Foreword extends Activity
 		TextView i = (TextView) findViewById(R.id.innertext);
 		t.setText(title);
 		i.setText("    这将是有史以来最糟糕的一份教程，因为它不告诉你为什么要这样写，只告诉你怎样写。\n"
-				+"    所以有可能你离开了这个教程就不会独立地写。\n"
-				+"\n");
+				  +"    约定：\n"
+				  +"\n");
 	}
 }
 
